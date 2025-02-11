@@ -6,8 +6,10 @@ const Products = () => {
     const [productos, setProductos] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showCategoryModal, setShowCategoryModal] = useState(false); // Modal para agregar categoría
     const [editingProduct, setEditingProduct] = useState(null);
     const [formData, setFormData] = useState({ nombre: "", descripcion: "", precio: "", categoria: "", stock: "" });
+    const [categoryName, setCategoryName] = useState({nombre: ""}); // Estado para el nombre de la categoría
 
     // Obtener productos y categorías al cargar el componente
     useEffect(() => {
@@ -17,7 +19,7 @@ const Products = () => {
 
     const fetchProductos = async () => {
         try {
-            const response = await api.get("/productos");
+            const response = await api.get("/product");
             setProductos(response.data);
         } catch (error) {
             console.error("Error al obtener productos:", error);
@@ -26,7 +28,7 @@ const Products = () => {
 
     const fetchCategorias = async () => {
         try {
-            const response = await api.get("/categorias");
+            const response = await api.get("/category");
             setCategorias(response.data);
         } catch (error) {
             console.error("Error al obtener categorías:", error);
@@ -37,13 +39,17 @@ const Products = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleCategoryInputChange = (e) => {
+        setCategoryName(e.target.value); // Actualizamos el nombre de la categoría
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (editingProduct !== null) {
-                await api.put(`/productos/${editingProduct}`, formData);
+                await api.put(`/product/${editingProduct}`, formData);
             } else {
-                await api.post("/productos", formData);
+                await api.post("/product", formData);
             }
             setShowModal(false);
             setEditingProduct(null);
@@ -51,6 +57,19 @@ const Products = () => {
             fetchProductos();
         } catch (error) {
             console.error("Error al guardar producto:", error);
+        }
+    };
+
+    const handleCategorySubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Enviar la nueva categoría al backend
+            await api.post("/category", { nombre: categoryName });
+            setShowCategoryModal(false);
+            setCategoryName(""); // Limpiar el campo de categoría
+            fetchCategorias(); // Actualizar la lista de categorías
+        } catch (error) {
+            console.error("Error al agregar categoría:", error);
         }
     };
 
@@ -62,7 +81,7 @@ const Products = () => {
 
     const handleDelete = async (id) => {
         try {
-            await api.delete(`/productos/${id}`);
+            await api.delete(`/product/${id}`);
             fetchProductos();
         } catch (error) {
             console.error("Error al eliminar producto:", error);
@@ -73,6 +92,8 @@ const Products = () => {
         <div className="container mt-5">
             <h2 className="text-center mb-4">Gestión de Productos</h2>
             <Button variant="primary" onClick={() => setShowModal(true)}>Agregar Producto</Button>
+            <Button variant="primary" onClick={() => setShowCategoryModal(true)} className="ms-3">Agregar Categoría</Button>
+
             <Table striped bordered hover className="mt-3">
                 <thead>
                     <tr>
@@ -101,6 +122,7 @@ const Products = () => {
                 </tbody>
             </Table>
 
+            {/* Modal para agregar o editar producto */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>{editingProduct ? "Editar Producto" : "Agregar Producto"}</Modal.Title>
@@ -133,6 +155,22 @@ const Products = () => {
                             <Form.Control type="number" name="stock" value={formData.stock} onChange={handleInputChange} required />
                         </Form.Group>
                         <Button variant="primary" type="submit">{editingProduct ? "Actualizar" : "Agregar"}</Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            {/* Modal para agregar categoría */}
+            <Modal show={showCategoryModal} onHide={() => setShowCategoryModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Agregar Categoría</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleCategorySubmit}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Nombre de la Categoría</Form.Label>
+                            <Form.Control type="text" value={categoryName} onChange={handleCategoryInputChange} required />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">Agregar Categoría</Button>
                     </Form>
                 </Modal.Body>
             </Modal>
