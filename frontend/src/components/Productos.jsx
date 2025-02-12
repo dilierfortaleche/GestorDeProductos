@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Form, Modal } from "react-bootstrap";
-import api from "../api/api"; // Importar API configurada con Axios
+import api from "../api/api";
 
 const Products = () => {
     const [productos, setProductos] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [showCategoryModal, setShowCategoryModal] = useState(false); // Modal para agregar categoría
+    const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
     const [formData, setFormData] = useState({ nombre: "", descripcion: "", precio: "", categoria: "", stock: "" });
-    const [categoryName, setCategoryName] = useState({nombre: ""}); // Estado para el nombre de la categoría
+    const [categoryName, setCategoryName] = useState("");
 
-    // Obtener productos y categorías al cargar el componente
     useEffect(() => {
         fetchProductos();
         fetchCategorias();
@@ -40,7 +39,7 @@ const Products = () => {
     };
 
     const handleCategoryInputChange = (e) => {
-        setCategoryName(e.target.value); // Actualizamos el nombre de la categoría
+        setCategoryName(e.target.value);
     };
 
     const handleSubmit = async (e) => {
@@ -63,11 +62,10 @@ const Products = () => {
     const handleCategorySubmit = async (e) => {
         e.preventDefault();
         try {
-            // Enviar la nueva categoría al backend
             await api.post("/category", { nombre: categoryName });
             setShowCategoryModal(false);
-            setCategoryName(""); // Limpiar el campo de categoría
-            fetchCategorias(); // Actualizar la lista de categorías
+            setCategoryName("");
+            fetchCategorias();
         } catch (error) {
             console.error("Error al agregar categoría:", error);
         }
@@ -179,3 +177,4 @@ const Products = () => {
 };
 
 export default Products;
+

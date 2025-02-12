@@ -6,29 +6,29 @@ function Footer() {
             <p className="mb-2 fw-bold">© 2025 Todos los derechos son de Dilier Esteban Fortaleche Lopez.</p>
             <div className="d-flex justify-content-center gap-3">
                 <a
-                    href="https://www.facebook.com"
+                    href="https://www.facebook.com/profile.php?id=100092180977566"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-secondary text-decoration-none"
-                    className="link-secondary hover-link-primary"
+                    className="text-withe text-decoration-none"
+                    className="link-withe hover-link-primary"
                 >
                     Facebook
                 </a>
                 <a
-                    href="https://www.twitter.com"
+                    href="https://www.instagram.com/fortalechedilier?igsh=YXN1emEzY25yc2F2"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary text-decoration-none"
-                    className="link-secondary"
+                    className="link-white"
                 >
-                    Twitter
+                    instagram
                 </a>
                 <a
                     href="https://www.linkedin.com/in/estebanfortaleche/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary text-decoration-none"
-                    className="link-secondary"
+                    className="link-withe"
                 >
                     linkedin
                 </a>
