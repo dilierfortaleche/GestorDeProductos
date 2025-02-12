@@ -9,8 +9,7 @@ function Footer() {
                     href="https://www.facebook.com/profile.php?id=100092180977566"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-withe text-decoration-none"
-                    className="link-withe hover-link-primary"
+                    className="text-withe text-decoration-none link-withe hover-link-primary"
                 >
                     Facebook
                 </a>
@@ -18,8 +17,7 @@ function Footer() {
                     href="https://www.instagram.com/fortalechedilier?igsh=YXN1emEzY25yc2F2"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-secondary text-decoration-none"
-                    className="link-white"
+                    className="text-withe text-decoration-none link-withe hover-link-primary"
                 >
                     instagram
                 </a>
@@ -27,8 +25,7 @@ function Footer() {
                     href="https://www.linkedin.com/in/estebanfortaleche/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-secondary text-decoration-none"
-                    className="link-withe"
+                    className="text-withe text-decoration-none link-withe hover-link-primary"
                 >
                     linkedin
                 </a>
